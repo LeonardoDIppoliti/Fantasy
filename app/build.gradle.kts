@@ -40,5 +40,5 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "it.unicam.cs.mpgc.rpg126043.Main"
 }
