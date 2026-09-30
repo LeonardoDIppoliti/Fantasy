@@ -13,6 +13,7 @@ public class Player extends Entity {
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
+    public int hasKey = 0;
 
     public Player(GamePanel gP, KeyHandler keyH) {
         this.gP = gP;
@@ -23,6 +24,8 @@ public class Player extends Entity {
         solidArea =new Rectangle();
         solidArea.x=8;
         solidArea.y=16;
+        solidAreaDefaultX=solidArea.x;
+        solidAreaDefaultY=solidArea.y;
         solidArea.width=32;
         solidArea.height=32;
 
@@ -49,7 +52,7 @@ public class Player extends Entity {
         worldX= gP.tilesize*23;
         worldY= gP.tilesize*21;
         speed=4;
-        directions="up";
+        directions="down";
     }
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -65,6 +68,10 @@ public class Player extends Entity {
             //CHECK TILE COLLISION
             collisionOn = false;
             gP.cChecker.checkTile(this);
+
+            //CHECK OBJ COLLISION
+           int objIndex = gP.cChecker.checkObject(this,true);
+           pickUpObj(objIndex);
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -95,8 +102,40 @@ public class Player extends Entity {
                 }
                 spriteCount = 0;
             }
+
         }
     }
+    public void pickUpObj(int i) {
+        if (i !=999) {
+            String objName = gP.obj[i].name;
+            switch (objName) {
+                case "Key":
+                    hasKey++;
+                    gP.obj[i] =null;
+                    gP.ui.showMessage("You got a Key! ");
+                    break;
+                case "Door":
+                    if(hasKey > 0){
+                        gP.obj[i] =null;
+                        hasKey--;
+                        gP.ui.showMessage("You opened the door ");
+                    }else{
+                        gP.ui.showMessage("You need a key! ");
+                    }
+                    break;
+                case "Boots":
+                    speed +=2;
+                    gP.obj[i] =null;
+                    gP.ui.showMessage("Speed up! ");
+                    break;
+                case "Chest":
+                    gP.ui.gameFinished=true;
+                    break;
+            }
+        }
+
+    }
+
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         switch (directions){
