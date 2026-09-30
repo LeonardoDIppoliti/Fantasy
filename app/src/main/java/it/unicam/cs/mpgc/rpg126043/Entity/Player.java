@@ -63,11 +63,11 @@ public class Player extends Entity {
                 directions = "right";
             }
             //CHECK TILE COLLISION
-            colllisionOn = false;
+            collisionOn = false;
             gP.cChecker.checkTile(this);
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if (!colllisionOn) {
+            if (!collisionOn) {
                 switch (directions) {
                     case "up":
                         worldY -= speed;

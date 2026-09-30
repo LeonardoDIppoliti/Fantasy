@@ -26,7 +26,8 @@ public class CollisionChecker {
                 tileNum1= gP.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2= gP.tileM.mapTileNum[entityRightCol][entityTopRow];
                 if(gP.tileM.tile[tileNum1].collision || gP.tileM.tile[tileNum2].collision){
-                    e.colllisionOn=true;
+                    e.collisionOn=true;
+
                 }
                 break;
             case "down":
@@ -34,7 +35,7 @@ public class CollisionChecker {
                 tileNum1= gP.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum2= gP.tileM.mapTileNum[entityRightCol][entityBottomRow];
                 if(gP.tileM.tile[tileNum1].collision || gP.tileM.tile[tileNum2].collision){
-                    e.colllisionOn=true;
+                    e.collisionOn=true;
                 }
                 break;
             case "left":
@@ -42,7 +43,7 @@ public class CollisionChecker {
                 tileNum1= gP.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2= gP.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 if(gP.tileM.tile[tileNum1].collision || gP.tileM.tile[tileNum2].collision){
-                    e.colllisionOn=true;
+                    e.collisionOn=true;
                 }
                 break;
             case "right":
@@ -50,7 +51,7 @@ public class CollisionChecker {
                 tileNum1= gP.tileM.mapTileNum[entityRightCol][entityTopRow];
                 tileNum2= gP.tileM.mapTileNum[entityRightCol][entityBottomRow];
                 if(gP.tileM.tile[tileNum1].collision || gP.tileM.tile[tileNum2].collision){
-                    e.colllisionOn=true;
+                    e.collisionOn=true;
                 }
                 break;
         }

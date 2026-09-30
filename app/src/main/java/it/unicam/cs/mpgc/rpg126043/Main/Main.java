@@ -20,6 +20,8 @@ public class Main extends JFrame {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        gamePanel.setUpGame();
+
         gamePanel.startGameThread();
     }
 }
