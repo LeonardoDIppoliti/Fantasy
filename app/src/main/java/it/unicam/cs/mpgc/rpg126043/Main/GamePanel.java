@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
 import it.unicam.cs.mpgc.rpg126043.Entity.Player;
+import it.unicam.cs.mpgc.rpg126043.Tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,21 +11,26 @@ public class GamePanel extends JPanel implements Runnable {
     private final int originaltilesize=16; // 16x16 tile
     private final int scale = 3;
     public final int tilesize=originaltilesize*scale; //48x48 tile size
-    private final int maxScreenCol = 16;
-    private final int maxScreenRow = 12;
-    private final int screenWidth = tilesize*maxScreenCol; //786 pixels
-    private final int screenHeight = tilesize*maxScreenRow; //576 pixels
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = tilesize*maxScreenCol; //786 pixels
+    public final int screenHeight = tilesize*maxScreenRow; //576 pixels
 
-    KeyHandler keyH = new KeyHandler();
-    Thread gameThread;
-    Player player = new Player(this, keyH);
+    //WORLD PARAMETERS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tilesize*maxWorldCol;
+    public final int worldHeight = tilesize*maxWorldRow;
+
     // Frame Per Second
     int FPS = 60;
 
-    // set player position and speed
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    TileManager tileM = new TileManager(this);
+    KeyHandler keyH = new KeyHandler();
+    Thread gameThread;
+    public Player player = new Player(this, keyH);
+
+
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -76,6 +82,8 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2= (Graphics2D) g;
+        tileM.draw(g2);
+
         player.draw(g2);
         g2.dispose();
     }
