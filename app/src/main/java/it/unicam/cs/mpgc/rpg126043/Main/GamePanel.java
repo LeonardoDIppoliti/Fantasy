@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
 
 
@@ -46,8 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        int nanoSecond = 1000000000;
-        double drawInterval = (double) nanoSecond / FPS;
+        double drawInterval = 1000000000 / FPS;
         double deltaTime = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -65,9 +65,9 @@ public class GamePanel extends JPanel implements Runnable {
                 update();
                 repaint();
                 deltaTime --;
-                drawCount++;
+                drawCount ++;
             }
-            if(timer>= nanoSecond) {
+            if(timer>= 1000000000) {
                 System.out.println("FPS" + drawCount);
                 drawCount = 0;
                 timer = 0;

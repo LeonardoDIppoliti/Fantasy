@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg126043.Entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -9,4 +10,6 @@ public class Entity {
     public String directions;
     public int spriteCount = 0;
     public int spriteNum=1;
+    public Rectangle solidArea;
+    public boolean colllisionOn =false;
 }

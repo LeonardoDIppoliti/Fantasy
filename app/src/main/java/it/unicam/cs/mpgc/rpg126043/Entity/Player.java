@@ -20,6 +20,12 @@ public class Player extends Entity {
         screenX= gP.screenWidth/2 - (gP.tilesize/2);
         screenY= gP.screenHeight/2 - (gP.tilesize/2);
 
+        solidArea =new Rectangle();
+        solidArea.x=8;
+        solidArea.y=16;
+        solidArea.width=32;
+        solidArea.height=32;
+
         setDefaultValues();
         getPlayerImages();
     }
@@ -43,31 +49,52 @@ public class Player extends Entity {
         worldX= gP.tilesize*23;
         worldY= gP.tilesize*21;
         speed=4;
-        directions="left";
+        directions="up";
     }
-    public void update(){
-        if(keyH.upPressed == true){
-            directions="up";
-            worldY -= speed;
-        }else if(keyH.downPressed == true){
-            directions="down";
-            worldY += speed;
-        }else if(keyH.leftPressed == true){
-            directions="left";
-            worldX -= speed;
-        }else if(keyH.rightPressed == true){
-            directions="right";
-            worldX += speed;
-        }
-        spriteCount++;
-        if(spriteCount==10){
-            if(spriteNum==1){
-                spriteNum=2;
+    public void update() {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            if (keyH.upPressed == true) {
+                directions = "up";
+            } else if (keyH.downPressed == true) {
+                directions = "down";
+            } else if (keyH.leftPressed == true) {
+                directions = "left";
+            } else if (keyH.rightPressed == true) {
+                directions = "right";
             }
-            else if(spriteNum==2){
-                spriteNum=1;
+            //CHECK TILE COLLISION
+            colllisionOn = false;
+            gP.cChecker.checkTile(this);
+
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if (!colllisionOn) {
+                switch (directions) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+
+                }
             }
-            spriteCount=0;
+
+            spriteCount++;
+            if (spriteCount == 10) {
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCount = 0;
+            }
         }
     }
     public void draw(Graphics2D g2) {
