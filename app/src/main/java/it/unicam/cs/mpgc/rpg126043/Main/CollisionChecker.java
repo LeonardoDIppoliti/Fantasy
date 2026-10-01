@@ -129,4 +129,106 @@ public class CollisionChecker {
        }
         return index;
     }
+    //Player to NPC collision
+    public int checkEntity(Entity e,Entity[] target){
+        int index =999;
+        for(int i = 0;i<target.length;i++){
+
+            if(target[i]!=null){
+
+                //get entity's solid area position
+                e.solidArea.x = e.worldX + e.solidArea.x;
+                e.solidArea.y = e.worldY + e.solidArea.y;
+                // get obj's solid area position
+                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
+                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
+
+                switch(e.directions){
+                    case "up":
+                        e.solidArea.y -= e.speed;
+                        if(e.solidArea.intersects(target[i].solidArea)){
+                            e.collisionOn=true;
+                            index=i;
+                        }
+                        break;
+                    case "down":
+                        e.solidArea.y += e.speed;
+                        if(e.solidArea.intersects(target[i].solidArea)){
+                            e.collisionOn=true;
+                            index=i;
+                        }
+                        break;
+                    case "left":
+                        e.solidArea.x -= e.speed;
+                        if(e.solidArea.intersects(target[i].solidArea)){
+                            e.collisionOn=true;
+                            index=i;
+                        }
+                        break;
+                    case "right":
+                        e.solidArea.x += e.speed;
+                        if(e.solidArea.intersects(target[i].solidArea)){
+                                e.collisionOn=true;
+                                index=i;
+                        }
+                        break;
+                }
+                e.solidArea.x = e.solidAreaDefaultX;
+                e.solidArea.y = e.solidAreaDefaultY;
+                target[i].solidArea.x = target[i].solidAreaDefaultX;
+                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            }
+
+
+        }
+        return index;
+    }
+    //NPC to Player collision
+    public void checkPlayer(Entity e){
+
+
+            //get entity's solid area position
+            e.solidArea.x = e.worldX + e.solidArea.x;
+            e.solidArea.y = e.worldY + e.solidArea.y;
+            // get obj's solid area position
+            gP.player.solidArea.x = gP.player.worldX + gP.player.solidArea.x;
+            gP.player.solidArea.y = gP.player.worldY + gP.player.solidArea.y;
+
+            switch(e.directions){
+                case "up":
+                    e.solidArea.y -= e.speed;
+                    if(e.solidArea.intersects(gP.player.solidArea)){
+                        e.collisionOn=true;
+
+                    }
+                    break;
+                case "down":
+                    e.solidArea.y += e.speed;
+                    if(e.solidArea.intersects(gP.player.solidArea)){
+                        e.collisionOn=true;
+
+                    }
+                    break;
+                case "left":
+                    e.solidArea.x -= e.speed;
+                    if(e.solidArea.intersects(gP.player.solidArea)){
+                        e.collisionOn=true;
+
+                    }
+                    break;
+                case "right":
+                    e.solidArea.x += e.speed;
+                    if(e.solidArea.intersects(gP.player.solidArea)){
+                        e.collisionOn=true;
+
+                    }
+                    break;
+            }
+            e.solidArea.x = e.solidAreaDefaultX;
+            e.solidArea.y = e.solidAreaDefaultY;
+            gP.player.solidArea.x = gP.player.solidAreaDefaultX;
+            gP.player.solidArea.y = gP.player.solidAreaDefaultY;
+        }
+
+
 }

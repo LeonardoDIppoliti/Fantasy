@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
+import it.unicam.cs.mpgc.rpg126043.Entity.Entity;
 import it.unicam.cs.mpgc.rpg126043.Entity.Player;
 import it.unicam.cs.mpgc.rpg126043.Object.SuperObject;
 import it.unicam.cs.mpgc.rpg126043.Tile.TileManager;
@@ -34,7 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
 
-    //Player And Object
+    //Entity , Player And Object
+    public Entity[] npc = new Entity[10];
     public Player player = new Player(this, keyH);
     public SuperObject[] obj = new SuperObject[10];
 
@@ -52,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
     public void setUpGame(){
+        aSetter.setNPC();
         aSetter.setObject();
         gameState = playState;
     }
@@ -92,8 +95,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
     public void update(){
         if(gameState == playState){
+            //PLAYER
             player.update();
 
+            //NPC
+            for (int i = 0; i < npc.length; i++) {
+                if(npc[i] != null) {
+                    npc[i].update();
+                }
+            }
         }
         if(gameState == pauseState){
 
@@ -112,6 +122,13 @@ public class GamePanel extends JPanel implements Runnable {
                 obj[i].draw(g2,this);
             }
         }
+        //NPC
+        for (int i = 0; i < npc.length; i++) {
+            if(npc[i] != null) {
+                npc[i].draw(g2);
+            }
+        }
+
 
         //PLAYER
         player.draw(g2);

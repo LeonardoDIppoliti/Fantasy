@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Player extends Entity {
-    GamePanel gP;
+
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
 
     public Player(GamePanel gP, KeyHandler keyH) {
-        this.gP = gP;
+        super(gP);
         this.keyH = keyH;
         screenX= gP.screenWidth/2 - (gP.tilesize/2);
         screenY= gP.screenHeight/2 - (gP.tilesize/2);
@@ -33,28 +33,16 @@ public class Player extends Entity {
         getPlayerImages();
     }
     public void getPlayerImages(){
-        up1=setup("boy_up_1");
-        up2=setup("boy_up_2");
-        down1=setup("boy_down_1");
-        down2=setup("boy_down_2");
-        left1=setup("boy_left_1");
-        left2=setup("boy_left_2");
-        right1=setup("boy_right_1");
-        right2=setup("boy_right_2");
+        up1=setup("/PlayerImages/Walking_sprites/boy_up_1");
+        up2=setup("/PlayerImages/Walking_sprites/boy_up_2");
+        down1=setup("/PlayerImages/Walking_sprites/boy_down_1");
+        down2=setup("/PlayerImages/Walking_sprites/boy_down_2");
+        left1=setup("/PlayerImages/Walking_sprites/boy_left_1");
+        left2=setup("/PlayerImages/Walking_sprites/boy_left_2");
+        right1=setup("/PlayerImages/Walking_sprites/boy_right_1");
+        right2=setup("/PlayerImages/Walking_sprites/boy_right_2");
     }
 
-    public BufferedImage setup(String imageName){
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-        try {
-            image= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/PlayerImages/Walking_sprites/"+imageName+".png")));
-            image = uTool.scaleImage(image, gP.tilesize, gP.tilesize);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return image;
-    }
 
     public void setDefaultValues() {
         worldX= gP.tilesize*23;
@@ -80,6 +68,9 @@ public class Player extends Entity {
             //CHECK OBJ COLLISION
            int objIndex = gP.cChecker.checkObject(this,true);
            pickUpObj(objIndex);
+           //CHECK NPC COLLISION
+            int npcIndex= gP.cChecker.checkEntity(this, gP.npc);
+            interactNPC(npcIndex);
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -117,7 +108,10 @@ public class Player extends Entity {
         if (i !=999) {
 
         }
-
+    }
+    public void interactNPC(int i) {
+        if (i !=999) {
+        }
     }
 
     public void draw(Graphics2D g2) {
