@@ -18,8 +18,8 @@ public class Player extends Entity {
     public Player(GamePanel gP, KeyHandler keyH) {
         super(gP);
         this.keyH = keyH;
-        screenX= gP.screenWidth/2 - (gP.tilesize/2);
-        screenY= gP.screenHeight/2 - (gP.tilesize/2);
+        screenX = gP.screenWidth/2 - (gP.tilesize/2);
+        screenY = gP.screenHeight/2 - (gP.tilesize/2);
 
         solidArea =new Rectangle();
         solidArea.x=8;

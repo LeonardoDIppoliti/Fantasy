@@ -24,6 +24,7 @@ public class Entity {
     int dialogueIndex=0;
 
     public Entity(GamePanel gP){
+
         this.gP=gP;
     }
     public void setAction(){
@@ -132,6 +133,7 @@ public class Entity {
         }
         return image;
     }
+
     public void speak(){
         if(dialogue[dialogueIndex] == null)
         {

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class TileManager {
     GamePanel gP;
     public Tile[] tile;
-    public int mapTileNum[][];
+    public int[][] mapTileNum;
     public TileManager(GamePanel gP) {
         this.gP = gP;
         tile = new Tile[10];
@@ -86,10 +86,10 @@ public class TileManager {
             int screenY= worldY-gP.player.worldY+gP.player.screenY;
 
             //IMPROVING RENDERING
-            if(worldX + gP.tilesize >gP.player.worldX- gP.player.screenX &&
-               worldX -gP.tilesize < gP.player.worldX+gP.player.screenX &&
-               worldY +gP.tilesize >gP.player.worldY- gP.player.screenY &&
-               worldY -gP.tilesize <gP.player.worldY + gP.player.screenY
+            if(worldX + gP.tilesize > gP.player.worldX - gP.player.screenX &&
+               worldX - gP.tilesize < gP.player.worldX + gP.player.screenX &&
+               worldY + gP.tilesize > gP.player.worldY - gP.player.screenY &&
+               worldY - gP.tilesize < gP.player.worldY + gP.player.screenY
             ){
                 g2.drawImage(tile[tileNum].image,screenX,screenY,null);
             }

@@ -14,6 +14,8 @@ public class UI {
     int messageCounter=0;
     public boolean gameFinished =false;
     public String currentDialogue;
+    public int commandNum =0;
+    int titleScreenState=0; // 0: FIRST PAGE 1: SECOND PAGE
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -30,19 +32,113 @@ public class UI {
         g2.setFont(arial_40);
         g2.setColor(Color.white);
 
-        if(gp.gameState == gp.playState) {
-
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
         }
+        //PLAY STATE
+        if(gp.gameState == gp.playState) {
+            //DO LATER
+        }
+        //PAUSE STATE
         if(gp.gameState == gp.pauseState){
             drawPauseScreen();
         }
+        //DIALOGUE STATE
         if(gp.gameState == gp.dialogueState){
             drawDialogueScreen();
         }
 
     }
+    public void drawTitleScreen(){
+        if(titleScreenState==0){
+
+            //BACKGROUND COLOR
+            g2.setColor(new Color(60,70,70));
+            g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+
+            //TITLE NAME
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+            String text = "FANTASY";
+            int x = getXforCenteredText(text);
+            int y = gp.tilesize*3;
+
+            //SHADOW
+            g2.setColor(Color.black);
+            g2.drawString(text,x+5,y+5);
+            //MAIN TEXT
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+
+            //CHARACTER IMAGE
+            x = gp.screenWidth/2-(gp.tilesize*2)/2;
+            y += gp.tilesize*2;
+            g2.drawImage(gp.player.down1,x,y,gp.tilesize*2,gp.tilesize*2,null);
+
+            //MENU
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD,40F));
+
+            text = "START GAME";
+            x = getXforCenteredText(text);
+            y += gp.tilesize * 3.5;
+            g2.drawString(text,x,y);
+            if(commandNum==0){
+                g2.drawString("=>",x-gp.tilesize-8,y);
+            }
+
+            text = "LOAD GAME";
+            x = getXforCenteredText(text);
+            y += gp.tilesize;
+            g2.drawString(text,x,y);
+            if(commandNum==1){
+                g2.drawString("=>",x-gp.tilesize-8,y);
+            }
+
+            text = "QUIT";
+            x = getXforCenteredText(text);
+            y += gp.tilesize;
+            g2.drawString(text,x,y);
+            if(commandNum==2){
+                g2.drawString("=>",x-gp.tilesize-8,y);
+            }
+
+
+        } else if(titleScreenState==1){
+
+            //BACKGROUND COLOR
+            g2.setColor(new Color(60,70,70));
+            g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+            //CONTROLS SCREEN
+            g2.setColor(Color.WHITE);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+
+            String text = "CONTROLS: ";
+            int x = getXforCenteredText(text);
+            int y = gp.tilesize*3;
+            g2.drawString(text,x,y);
+
+            text = "W = UP \n A = LEFT \n S = DOWN \n D = RIGHT \n ENTER = INTERACT";
+            x = getXforCenteredText(text) + gp.tilesize*8;
+            y += gp.tilesize;
+            for(String line : text.split("\n")){
+                g2.drawString(line,x,y);
+                y +=gp.tilesize;
+            }
+
+            text = "CONTINUE";
+            x = getXforCenteredText(text);
+            y = gp.tilesize*10;
+            g2.drawString(text,x,y);
+            if(commandNum==0){
+                g2.drawString("=>",x-gp.tilesize,y);
+            }
+
+        }
+    }
     public void drawDialogueScreen(){
-        //Window
+        //WINDOW
         int x = gp.tilesize*2;
         int y = gp.tilesize/2;
         int width=gp.screenWidth - (gp.tilesize*4) ;
@@ -57,7 +153,7 @@ public class UI {
 
         for(String line : currentDialogue.split("\n")){
             g2.drawString(line,x,y);
-            y+=40;
+            y+=gp.tilesize;
         }
 
 

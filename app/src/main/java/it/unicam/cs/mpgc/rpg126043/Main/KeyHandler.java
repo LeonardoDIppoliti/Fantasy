@@ -20,6 +20,42 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         int code = keyEvent.getKeyCode();
+
+        //TITLE STATE
+        if (gP.gameState == gP.titleState) {
+            if(gP.ui.titleScreenState == 0) {
+
+                if (code == KeyEvent.VK_W) {
+                    gP.ui.commandNum--;
+                    if (gP.ui.commandNum < 0) {
+                        gP.ui.commandNum = 2;
+                    }
+                }
+                if (code == KeyEvent.VK_S) {
+                    gP.ui.commandNum++;
+                    if (gP.ui.commandNum > 2) {
+                        gP.ui.commandNum = 0;
+                    }
+                }
+                if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE){
+                    if(gP.ui.commandNum==0){
+                        gP.ui.titleScreenState=1;
+                    }
+                    if(gP.ui.commandNum==1){
+                        //ADD LATER
+                    }
+                    if(gP.ui.commandNum==2){
+                        System.exit(0);
+                    }
+                }
+            }
+            else if(gP.ui.titleScreenState == 1) {
+                if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE) {
+                    gP.gameState = gP.playState;
+                }
+            }
+        }
+        //PLAY STATE
         if (gP.gameState == gP.playState) {
 
             if (code == KeyEvent.VK_W) {
