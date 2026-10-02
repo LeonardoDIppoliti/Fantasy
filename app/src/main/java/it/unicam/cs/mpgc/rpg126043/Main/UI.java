@@ -1,6 +1,8 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
+import it.unicam.cs.mpgc.rpg126043.Object.OBJ_Heart;
 import it.unicam.cs.mpgc.rpg126043.Object.OBJ_Key;
+import it.unicam.cs.mpgc.rpg126043.Object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,6 +11,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40,arial_80;
+    BufferedImage heartFull,heartHalf,heartBlank;
     public boolean messageOn=false;
     public String message="";
     int messageCounter=0;
@@ -21,6 +24,12 @@ public class UI {
         this.gp = gp;
         arial_40 = new Font("arial", Font.PLAIN, 40);
         arial_80 = new Font("arial", Font.BOLD, 80);
+
+        //CREATE HUD OBJ
+        SuperObject heart = new OBJ_Heart(gp);
+        heartFull = heart.image;
+        heartHalf = heart.image2;
+        heartBlank = heart.image3;
     }
     public void showMessage(String text){
         message=text;
@@ -38,18 +47,49 @@ public class UI {
         }
         //PLAY STATE
         if(gp.gameState == gp.playState) {
-            //DO LATER
+            drawPlayerLife();
         }
         //PAUSE STATE
         if(gp.gameState == gp.pauseState){
+            drawPlayerLife();
             drawPauseScreen();
         }
         //DIALOGUE STATE
         if(gp.gameState == gp.dialogueState){
+            drawPlayerLife();
             drawDialogueScreen();
         }
 
     }
+    public void drawPlayerLife(){
+
+        int x = gp.tilesize/2;
+        int y = gp.tilesize/2;
+
+        int i=0;
+        //DRAW MAX LIFE
+        while (i < gp.player.maxLife/2){
+            g2.drawImage(heartBlank, x, y, null);
+            i++;
+            x += gp.tilesize;
+        }
+        //RESET
+        x = gp.tilesize/2;
+        y = gp.tilesize/2;
+        i = 0;
+        //DRAW CURRENT LIFE
+        while (i < gp.player.currentLife) {
+            g2.drawImage(heartHalf, x, y, null);
+            i++;
+            if (i < gp.player.currentLife) {
+                g2.drawImage(heartFull, x, y, null);
+            }
+            i++;
+            x += gp.tilesize;
+        }
+    }
+
+
     public void drawTitleScreen(){
         if(titleScreenState==0){
 
@@ -119,7 +159,7 @@ public class UI {
             int y = gp.tilesize*3;
             g2.drawString(text,x,y);
 
-            text = "W = UP \n A = LEFT \n S = DOWN \n D = RIGHT \n ENTER = INTERACT";
+            text = "W = UP \n A = LEFT \n S = DOWN \n D = RIGHT \n P = PAUSE \n ENTER = INTERACT";
             x = getXforCenteredText(text) + gp.tilesize*8;
             y += gp.tilesize;
             for(String line : text.split("\n")){

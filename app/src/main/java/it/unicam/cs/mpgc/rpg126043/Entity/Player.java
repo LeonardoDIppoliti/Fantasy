@@ -15,6 +15,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+
     public Player(GamePanel gP, KeyHandler keyH) {
         super(gP);
         this.keyH = keyH;
@@ -49,6 +50,10 @@ public class Player extends Entity {
         worldY= gP.tilesize*21;
         speed=4;
         directions="down";
+
+        //PLAYER STATUS
+        maxLife = 6;
+        currentLife = maxLife;
     }
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -71,6 +76,10 @@ public class Player extends Entity {
            //CHECK NPC COLLISION
             int npcIndex= gP.cChecker.checkEntity(this, gP.npc);
             interactNPC(npcIndex);
+
+            //CHECK EVENT
+            gP.eHhandler.checkEvent();
+            gP.keyH.enterPressed = false;
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (!collisionOn) {
@@ -117,7 +126,6 @@ public class Player extends Entity {
             }
 
         }
-        gP.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
