@@ -2,12 +2,9 @@ package it.unicam.cs.mpgc.rpg126043.Entity;
 
 import it.unicam.cs.mpgc.rpg126043.Main.GamePanel;
 import it.unicam.cs.mpgc.rpg126043.Main.KeyHandler;
-import it.unicam.cs.mpgc.rpg126043.Main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 public class Player extends Entity {
 
@@ -57,13 +54,13 @@ public class Player extends Entity {
     }
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            if (keyH.upPressed == true) {
+            if (keyH.upPressed) {
                 directions = "up";
-            } else if (keyH.downPressed == true) {
+            } else if (keyH.downPressed) {
                 directions = "down";
-            } else if (keyH.leftPressed == true) {
+            } else if (keyH.leftPressed) {
                 directions = "left";
-            } else if (keyH.rightPressed == true) {
+            } else if (keyH.rightPressed) {
                 directions = "right";
             }
             //CHECK TILE COLLISION
@@ -114,7 +111,7 @@ public class Player extends Entity {
         }
     }
     public void pickUpObj(int i) {
-        if (i !=999) {
+        if(i !=999) {
 
         }
     }
@@ -128,7 +125,7 @@ public class Player extends Entity {
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, GamePanel gamePanel) {
         BufferedImage image = null;
         switch (directions){
             case "up":

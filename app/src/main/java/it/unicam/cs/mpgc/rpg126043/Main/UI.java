@@ -1,8 +1,7 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
-import it.unicam.cs.mpgc.rpg126043.Object.OBJ_Heart;
-import it.unicam.cs.mpgc.rpg126043.Object.OBJ_Key;
-import it.unicam.cs.mpgc.rpg126043.Object.SuperObject;
+import it.unicam.cs.mpgc.rpg126043.Entity.Entity;
+import it.unicam.cs.mpgc.rpg126043.Entity_Object.OBJ_Heart;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,7 +25,7 @@ public class UI {
         arial_80 = new Font("arial", Font.BOLD, 80);
 
         //CREATE HUD OBJ
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heartFull = heart.image;
         heartHalf = heart.image2;
         heartBlank = heart.image3;
