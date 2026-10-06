@@ -15,14 +15,14 @@ public class NPC_OldMan extends Entity {
     }
 
     public void getOldManImages(){
-        up1=setup("/NPC/oldman_up_1");
-        up2=setup("/NPC/oldman_up_2");
-        down1=setup("/NPC/oldman_down_1");
-        down2=setup("/NPC/oldman_down_2");
-        left1=setup("/NPC/oldman_left_1");
-        left2=setup("/NPC/oldman_left_2");
-        right1=setup("/NPC/oldman_right_1");
-        right2=setup("/NPC/oldman_right_2");
+        up1=setup("/NPC/oldman_up_1", gP.tilesize, gP.tilesize);
+        up2=setup("/NPC/oldman_up_2", gP.tilesize, gP.tilesize);
+        down1=setup("/NPC/oldman_down_1", gP.tilesize, gP.tilesize);
+        down2=setup("/NPC/oldman_down_2", gP.tilesize, gP.tilesize);
+        left1=setup("/NPC/oldman_left_1", gP.tilesize, gP.tilesize);
+        left2=setup("/NPC/oldman_left_2", gP.tilesize, gP.tilesize);
+        right1=setup("/NPC/oldman_right_1", gP.tilesize, gP.tilesize);
+        right2=setup("/NPC/oldman_right_2", gP.tilesize, gP.tilesize);
     }
     public void setAction(){
         actionLockCounter++;

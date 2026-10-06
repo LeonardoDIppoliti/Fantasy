@@ -10,7 +10,7 @@ public class OBJ_Key extends Entity {
     public OBJ_Key(GamePanel gP){
       super(gP);
         name="Key";
-        down1 = setup("/Objects/key");
+        down1 = setup("/Objects/key", gP.tilesize, gP.tilesize);
 
     }
 }

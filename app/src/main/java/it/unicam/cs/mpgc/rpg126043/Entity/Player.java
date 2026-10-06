@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg126043.Entity;
 
+import it.unicam.cs.mpgc.rpg126043.Entity_Object.OBJ_Shield_Wood;
+import it.unicam.cs.mpgc.rpg126043.Entity_Object.OBJ_Sword_Normal;
 import it.unicam.cs.mpgc.rpg126043.Main.GamePanel;
 import it.unicam.cs.mpgc.rpg126043.Main.KeyHandler;
 
@@ -31,14 +33,19 @@ public class Player extends Entity {
         getPlayerImages();
     }
     public void getPlayerImages(){
-        up1=setup("/PlayerImages/Walking_sprites/boy_up_1");
-        up2=setup("/PlayerImages/Walking_sprites/boy_up_2");
-        down1=setup("/PlayerImages/Walking_sprites/boy_down_1");
-        down2=setup("/PlayerImages/Walking_sprites/boy_down_2");
-        left1=setup("/PlayerImages/Walking_sprites/boy_left_1");
-        left2=setup("/PlayerImages/Walking_sprites/boy_left_2");
-        right1=setup("/PlayerImages/Walking_sprites/boy_right_1");
-        right2=setup("/PlayerImages/Walking_sprites/boy_right_2");
+        up1=setup("/PlayerImages/Walking_sprites/boy_up_1", gP.tilesize, gP.tilesize);
+        up2=setup("/PlayerImages/Walking_sprites/boy_up_2", gP.tilesize, gP.tilesize);
+        down1=setup("/PlayerImages/Walking_sprites/boy_down_1", gP.tilesize, gP.tilesize);
+        down2=setup("/PlayerImages/Walking_sprites/boy_down_2", gP.tilesize, gP.tilesize);
+        left1=setup("/PlayerImages/Walking_sprites/boy_left_1", gP.tilesize, gP.tilesize);
+        left2=setup("/PlayerImages/Walking_sprites/boy_left_2", gP.tilesize, gP.tilesize);
+        right1=setup("/PlayerImages/Walking_sprites/boy_right_1", gP.tilesize, gP.tilesize);
+        right2=setup("/PlayerImages/Walking_sprites/boy_right_2", gP.tilesize, gP.tilesize);
+    }
+    public void getPlayerAttackImages(){
+
+        right1=setup("/PlayerImages/Attacking_sprites/boy_attack_1", gP.tilesize, gP.tilesize);
+        right2=setup("/PlayerImages/Attacking_sprites/boy_attack_2", gP.tilesize, gP.tilesize);
     }
 
 
@@ -49,11 +56,23 @@ public class Player extends Entity {
         directions="down";
 
         //PLAYER STATUS
+        level=1;
         maxLife = 6;
         currentLife = maxLife;
+        dexterity=1; // Affects damage taken
+        strength=1; // Affects damage dealt
+        luck=1; // affects critical rate
+        exp=0;
+        nextLevelExp=40;
+        coins=0;
+        currentWeapon=new OBJ_Sword_Normal(gP);
+        currentShield=new OBJ_Shield_Wood(gP);
+        attack=getAttack(); // Total damage dealt (strength and attackValue of weapon)
+        defense=getDefense(); //total damage taken (dexterity and defenseValue of shield)
+
     }
     public void update() {
-        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.enterPressed) {
             if (keyH.upPressed) {
                 directions = "up";
             } else if (keyH.downPressed) {
@@ -71,15 +90,16 @@ public class Player extends Entity {
            int objIndex = gP.cChecker.checkObject(this,true);
            pickUpObj(objIndex);
            //CHECK NPC COLLISION
-            int npcIndex= gP.cChecker.checkEntity(this, gP.npc);
-            interactNPC(npcIndex);
-
-            //CHECK EVENT
-            gP.eHhandler.checkEvent();
-            gP.keyH.enterPressed = false;
+           int npcIndex= gP.cChecker.checkEntity(this, gP.npc);
+           interactNPC(npcIndex);
+           //CHECK MONSTER COLLISION
+           int monIndex= gP.cChecker.checkEntity(this, gP.monster);
+           contactMonster(monIndex);
+           //CHECK EVENT
+           gP.eHhandler.checkEvent();
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if (!collisionOn) {
+            if (!collisionOn && !keyH.enterPressed) {
                 switch (directions) {
                     case "up":
                         worldY -= speed;
@@ -98,6 +118,8 @@ public class Player extends Entity {
                 }
             }
 
+            gP.keyH.enterPressed = false;
+
             spriteCount++;
             if (spriteCount == 10) {
                 if (spriteNum == 1) {
@@ -108,6 +130,16 @@ public class Player extends Entity {
                 spriteCount = 0;
             }
 
+        }
+
+        if(gP.gameState == gP.playState) {
+            if (invincible) {
+                invincibleCounter++;
+                if (invincibleCounter > 60) {
+                    invincible = false;
+                    invincibleCounter = 0;
+                }
+            }
         }
     }
     public void pickUpObj(int i) {
@@ -124,44 +156,19 @@ public class Player extends Entity {
 
         }
     }
-
-    public void draw(Graphics2D g2, GamePanel gamePanel) {
-        BufferedImage image = null;
-        switch (directions){
-            case "up":
-                if(spriteNum==1){
-                    image = up1;
-                }
-                if(spriteNum==2){
-                    image = up2;
-                }
-                break;
-
-            case "down":
-                if(spriteNum==1){
-                    image = down1;
-                }
-                if(spriteNum==2){
-                    image = down2;
-                }
-                break;
-            case "left":
-                if(spriteNum==1){
-                    image = left1;
-                }
-                if(spriteNum==2){
-                    image = left2;
-                }
-                break;
-            case "right":
-                if(spriteNum==1){
-                    image = right1;
-                }
-                if(spriteNum==2){
-                    image = right2;
-                }
-                break;
+    public void contactMonster(int i){
+        if (i != 999) {
+            if (!invincible && gP.gameState == gP.playState) {
+                      }
         }
-        g2.drawImage(image, screenX, screenY, null);
+
     }
+    public int getAttack(){
+        return attack = strength * currentWeapon.attackValue;
+    }
+    public int getDefense() {
+        return defense = dexterity * currentShield.defenseValue;
+    }
+
+
 }

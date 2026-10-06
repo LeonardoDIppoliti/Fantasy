@@ -10,39 +10,65 @@ import java.util.Objects;
 
 public class Entity {
     public BufferedImage image,image2,image3;
-    public String name;
     public boolean collision=false;
     GamePanel gP;
-    public int worldX,worldY;
-    public int speed;
     public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2;
-    public String directions ="down";
-    public int spriteCount = 0;
-    public int spriteNum=1;
     public Rectangle solidArea =  new Rectangle(0,0,48,48);
     public int solidAreaDefaultX,solidAreaDefaultY;
-    public boolean collisionOn =false;
-    public int actionLockCounter=0;
     String[] dialogue = new String[20];
+    public int type; //0 = player , 1 = NPC , 2 = Monster
+
+    //CHARACTER STATE
+    public int worldX,worldY;
+    public int spriteNum=1;
+    public boolean invincible=false;
+    public String directions ="down";
+    public boolean collisionOn =false;
     int dialogueIndex=0;
 
-    //CHARACTER STATUS
+    //CHARACTER ATTRIBUTES
+    public int speed;
     public int maxLife;
     public int currentLife;
+    public int defense;
+    public int attack;
+    public String name;
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int luck;
+    public int exp;
+    public int nextLevelExp;
+    public int coins;
+    public Entity currentWeapon;
+    public Entity currentShield;
+
+    //ITEM ATTRIBUTES
+    public int attackValue;
+    public int defenseValue;
+
+
+
+
+    //COUNTER
+    public int spriteCount = 0;
+    public int invincibleCounter =0;
+    public int actionLockCounter=0;
+
 
 
     public Entity(GamePanel gP){
         this.gP=gP;
     }
-    public void setAction(){
-
-    }
+    public void setAction(){}
     public void update(){
         setAction();
         collisionOn=false;
         gP.cChecker.checkTile(this);
         gP.cChecker.checkObject(this,false);
-        gP.cChecker.checkPlayer(this);
+        gP.cChecker.checkEntity(this,gP.npc);
+        gP.cChecker.checkEntity(this,gP.monster);
+       boolean contactPlayer = gP.cChecker.checkPlayer(this);
 
         if (!collisionOn) {
             switch (directions) {
@@ -128,12 +154,12 @@ public class Entity {
     }
 
 
-    public BufferedImage setup(String imagePath){
+    public BufferedImage setup(String imagePath,int width,int height){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try {
             image= ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imagePath+".png")));
-            image = uTool.scaleImage(image, gP.tilesize, gP.tilesize);
+            image = uTool.scaleImage(image, width, height);
 
         }catch (Exception e){
             e.printStackTrace();
