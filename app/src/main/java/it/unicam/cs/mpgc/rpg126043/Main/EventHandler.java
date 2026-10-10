@@ -63,7 +63,7 @@ public class EventHandler {
         eventRect[col][row].y = row * gP.tilesize + eventRect[col][row].y;
 
         if(gP.player.solidArea.intersects(eventRect[col][row]) &&
-        eventRect[col][row].eventDone == false){
+                !eventRect[col][row].eventDone){
             if(gP.player.directions.contentEquals(reqDirection) ||reqDirection.equals("any")){
                 hit=true;
 
@@ -81,17 +81,22 @@ public class EventHandler {
     }
     public void damageTrap(int col,int row,int gameState){
         gP.gameState=gameState;
-        gP.ui.currentDialogue = "You got hit by a trap";
-        gP.player.currentLife -= 1;
-        //eventRect[col][row].eventDone=true;
+        gP.ui.currentDialogue = "the party got hit by a trap";
+        for(int i=0; i<gP.pHandler.getParty().size();i++)
+        {
+            gP.pHandler.getParty().get(i).setCurrentLife(gP.pHandler.getParty().get(i).getCurrentLife()-1); ;
+        }
         canTouchEvent=false;
     }
     public void healingPool(int col,int row,int gameState){
         if(gP.keyH.enterPressed){
 
             gP.gameState=gameState;
-            gP.ui.currentDialogue = "You drink the water \n your life has been recovered";
-            gP.player.currentLife = gP.player.maxLife;
+            gP.ui.currentDialogue = "You drink the water \n the party has been recovered";
+            for(int i=0; i<gP.pHandler.getParty().size();i++)
+            {
+                gP.pHandler.getParty().get(i).setCurrentLife(gP.pHandler.getParty().get(i).getMaxLife());
+            }
 
 
         }

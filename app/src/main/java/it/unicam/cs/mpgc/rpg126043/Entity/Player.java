@@ -7,6 +7,8 @@ import it.unicam.cs.mpgc.rpg126043.Main.KeyHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Entity {
 
@@ -42,11 +44,6 @@ public class Player extends Entity {
         right1=setup("/PlayerImages/Walking_sprites/boy_right_1", gP.tilesize, gP.tilesize);
         right2=setup("/PlayerImages/Walking_sprites/boy_right_2", gP.tilesize, gP.tilesize);
     }
-    public void getPlayerAttackImages(){
-
-        right1=setup("/PlayerImages/Attacking_sprites/boy_attack_1", gP.tilesize, gP.tilesize);
-        right2=setup("/PlayerImages/Attacking_sprites/boy_attack_2", gP.tilesize, gP.tilesize);
-    }
 
 
     public void setDefaultValues() {
@@ -54,22 +51,6 @@ public class Player extends Entity {
         worldY= gP.tilesize*21;
         speed=4;
         directions="down";
-
-        //PLAYER STATUS
-        level=1;
-        maxLife = 6;
-        currentLife = maxLife;
-        dexterity=1; // Affects damage taken
-        strength=1; // Affects damage dealt
-        luck=1; // affects critical rate
-        exp=0;
-        nextLevelExp=40;
-        coins=0;
-        currentWeapon=new OBJ_Sword_Normal(gP);
-        currentShield=new OBJ_Shield_Wood(gP);
-        attack=getAttack(); // Total damage dealt (strength and attackValue of weapon)
-        defense=getDefense(); //total damage taken (dexterity and defenseValue of shield)
-
     }
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.enterPressed) {
@@ -162,12 +143,6 @@ public class Player extends Entity {
                       }
         }
 
-    }
-    public int getAttack(){
-        return attack = strength * currentWeapon.attackValue;
-    }
-    public int getDefense() {
-        return defense = dexterity * currentShield.defenseValue;
     }
 
 

@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
-import it.unicam.cs.mpgc.rpg126043.Entity.Entity;
-import it.unicam.cs.mpgc.rpg126043.Entity.Player;
+import it.unicam.cs.mpgc.rpg126043.Entity.*;
 import it.unicam.cs.mpgc.rpg126043.Tile.TileManager;
 
 import javax.swing.*;
@@ -42,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Entity , Player And Object
     public Entity[] npc = new Entity[10];
     public Player player = new Player(this, keyH);
+    public PartyHandler pHandler = new PartyHandler(this);
     public Entity[] obj = new Entity[10];
     public Entity[] monster= new Entity[20];
     List<Entity> entityList = new ArrayList<Entity>();
@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int characterState = 4;
+    public final int optionState = 5;
     //public final int battleState;
 
 

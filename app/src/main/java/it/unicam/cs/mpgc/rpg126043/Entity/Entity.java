@@ -26,27 +26,13 @@ public class Entity {
     public boolean collisionOn =false;
     int dialogueIndex=0;
 
-    //CHARACTER ATTRIBUTES
+    //CHARACTERS ATTRIBUTES
     public int speed;
     public int maxLife;
     public int currentLife;
     public int defense;
     public int attack;
     public String name;
-    public int level;
-    public int strength;
-    public int dexterity;
-    public int luck;
-    public int exp;
-    public int nextLevelExp;
-    public int coins;
-    public Entity currentWeapon;
-    public Entity currentShield;
-
-    //ITEM ATTRIBUTES
-    public int attackValue;
-    public int defenseValue;
-
 
 
 
@@ -192,5 +178,8 @@ public class Entity {
 
         }
     }
+
+
+
 
 }

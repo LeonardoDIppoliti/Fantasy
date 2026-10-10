@@ -26,7 +26,7 @@ public class KeyHandler implements KeyListener {
             titleState(code);
         }
         //PLAY STATE
-        if (gP.gameState == gP.playState) {
+        else if (gP.gameState == gP.playState) {
             playState(code);
         }
 
@@ -43,7 +43,19 @@ public class KeyHandler implements KeyListener {
         else if (gP.gameState == gP.characterState) {
             characterState(code);
         }
+        //CHARACTER STATE
+        else if (gP.gameState == gP.optionState) {
+            optionState(code);
+        }
 
+    }
+    public void optionState(int code){
+        if(code==KeyEvent.VK_ESCAPE){
+            gP.gameState=gP.playState;
+        }
+        if(code==KeyEvent.VK_ENTER){
+            enterPressed=true;
+        }
     }
     public void titleState(int code){
         if(gP.ui.titleScreenState == 0) {
@@ -99,7 +111,11 @@ public class KeyHandler implements KeyListener {
             enterPressed = true;
         }
         if(code == KeyEvent.VK_C){
+            gP.ui.memberNum=0;
             gP.gameState = gP.characterState;
+        }
+        if(code == KeyEvent.VK_ESCAPE){
+            gP.gameState = gP.optionState;
         }
 
 
@@ -115,6 +131,18 @@ public class KeyHandler implements KeyListener {
         }
     }
     public void characterState(int code){
+        if (code == KeyEvent.VK_A) {
+            gP.ui.memberNum--;
+            if (gP.ui.memberNum < 0) {
+                gP.ui.memberNum = gP.pHandler.getPartySize()-1;
+            }
+        }
+        if (code == KeyEvent.VK_D) {
+            gP.ui.memberNum++;
+            if (gP.ui.memberNum >= gP.pHandler.getPartySize()) {
+                gP.ui.memberNum = 0;
+            }
+        }
         if(code ==  KeyEvent.VK_C) {
             gP.gameState = gP.playState;
         }
