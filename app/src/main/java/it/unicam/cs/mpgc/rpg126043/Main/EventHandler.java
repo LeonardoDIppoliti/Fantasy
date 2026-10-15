@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
+import it.unicam.cs.mpgc.rpg126043.UI.UI;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -39,28 +41,25 @@ public class EventHandler {
         int xDistance = Math.abs(gP.player.worldX-previousEventX);
         int yDistance = Math.abs(gP.player.worldY-previousEventY);
         int distance = Math.max(xDistance, yDistance);
-        if(distance>gP.tilesize){
+        if(distance>gP.tileSize){
             canTouchEvent=true;
         }
 
         if(canTouchEvent){
-            if(hit(23,15,"up")){
-                damageTrap(23,15,gP.dialogueState);
-            }
             if(hit(23,7,"up")){
-                healingPool(23,7,gP.dialogueState);
+                healingPool(23,7);
             }
         }
 
     }
-
+    //Event replays after player move away from it
     public boolean hit(int col,int row,String reqDirection){
         boolean hit=false;
 
         gP.player.solidArea.x = gP.player.worldX + gP.player.solidArea.x;
         gP.player.solidArea.y = gP.player.worldY + gP.player.solidArea.y;
-        eventRect[col][row].x = col * gP.tilesize + eventRect[col][row].x;
-        eventRect[col][row].y = row * gP.tilesize + eventRect[col][row].y;
+        eventRect[col][row].x = col * gP.tileSize + eventRect[col][row].x;
+        eventRect[col][row].y = row * gP.tileSize + eventRect[col][row].y;
 
         if(gP.player.solidArea.intersects(eventRect[col][row]) &&
                 !eventRect[col][row].eventDone){
@@ -79,25 +78,13 @@ public class EventHandler {
 
         return hit;
     }
-    public void damageTrap(int col,int row,int gameState){
-        gP.gameState=gameState;
-        gP.ui.currentDialogue = "the party got hit by a trap";
-        for(int i=0; i<gP.pHandler.getParty().size();i++)
-        {
-            gP.pHandler.getParty().get(i).setCurrentLife(gP.pHandler.getParty().get(i).getCurrentLife()-1); ;
-        }
-        canTouchEvent=false;
-    }
-    public void healingPool(int col,int row,int gameState){
-        if(gP.keyH.enterPressed){
-
-            gP.gameState=gameState;
-            gP.ui.currentDialogue = "You drink the water \n the party has been recovered";
-            for(int i=0; i<gP.pHandler.getParty().size();i++)
-            {
-                gP.pHandler.getParty().get(i).setCurrentLife(gP.pHandler.getParty().get(i).getMaxLife());
-            }
-
+    public void healingPool(int col,int row){
+        if(gP.keyH.isEnterPressed()){
+            gP.player.isAttackCancelled(true);
+            gP.getDialogueScreen().setCurrentDialogue("You drink the water \n Your wounds recovered"+"\n (progress has been saved)");
+            gP.ui.setGameStateIndex(UI.GameState.dialogueScreen.ordinal());
+            gP.player.setCurrentLife(gP.player.getMaxLife());
+            gP.saveLoad.save();
 
         }
     }

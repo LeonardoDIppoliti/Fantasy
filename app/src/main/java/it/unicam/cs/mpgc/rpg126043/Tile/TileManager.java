@@ -24,9 +24,7 @@ public class TileManager {
     }
     public void getTileImage(){
             setup(0,"002",false);
-            setup(1,"032",true);
             setup(2,"018",true);
-            setup(3,"017",false);
             setup(4,"016",true);
             setup(5,"003",false);
 
@@ -37,7 +35,7 @@ public class TileManager {
         try {
             tile[index] = new Tile();
             tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/" + imageNum +".png")));
-            tile[index].image = uTool.scaleImage(tile[index].image, gP.tilesize, gP.tilesize);
+            tile[index].image = uTool.scaleImage(tile[index].image, gP.tileSize, gP.tileSize);
             tile[index].collision=collision;
 
         }catch (IOException e){
@@ -80,16 +78,16 @@ public class TileManager {
             int tileNum = mapTileNum[worldCol][worldRow];
 
             //MOVING CAMERA
-            int worldX=worldCol* gP.tilesize;
-            int worldY=worldRow* gP.tilesize;
+            int worldX=worldCol* gP.tileSize;
+            int worldY=worldRow* gP.tileSize;
             int screenX= worldX-gP.player.worldX+gP.player.screenX;
             int screenY= worldY-gP.player.worldY+gP.player.screenY;
 
             //IMPROVING RENDERING
-            if(worldX + gP.tilesize > gP.player.worldX - gP.player.screenX &&
-               worldX - gP.tilesize < gP.player.worldX + gP.player.screenX &&
-               worldY + gP.tilesize > gP.player.worldY - gP.player.screenY &&
-               worldY - gP.tilesize < gP.player.worldY + gP.player.screenY
+            if(worldX + gP.tileSize > gP.player.worldX - gP.player.screenX &&
+               worldX - gP.tileSize < gP.player.worldX + gP.player.screenX &&
+               worldY + gP.tileSize > gP.player.worldY - gP.player.screenY &&
+               worldY - gP.tileSize < gP.player.worldY + gP.player.screenY
             ){
                 g2.drawImage(tile[tileNum].image,screenX,screenY,null);
             }

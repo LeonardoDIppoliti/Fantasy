@@ -15,14 +15,14 @@ public class NPC_OldMan extends Entity {
     }
 
     public void getOldManImages(){
-        up1=setup("/NPC/oldman_up_1", gP.tilesize, gP.tilesize);
-        up2=setup("/NPC/oldman_up_2", gP.tilesize, gP.tilesize);
-        down1=setup("/NPC/oldman_down_1", gP.tilesize, gP.tilesize);
-        down2=setup("/NPC/oldman_down_2", gP.tilesize, gP.tilesize);
-        left1=setup("/NPC/oldman_left_1", gP.tilesize, gP.tilesize);
-        left2=setup("/NPC/oldman_left_2", gP.tilesize, gP.tilesize);
-        right1=setup("/NPC/oldman_right_1", gP.tilesize, gP.tilesize);
-        right2=setup("/NPC/oldman_right_2", gP.tilesize, gP.tilesize);
+        up1=setup("/NPC/oldman_up_1", gP.tileSize, gP.tileSize);
+        up2=setup("/NPC/oldman_up_2", gP.tileSize, gP.tileSize);
+        down1=setup("/NPC/oldman_down_1", gP.tileSize, gP.tileSize);
+        down2=setup("/NPC/oldman_down_2", gP.tileSize, gP.tileSize);
+        left1=setup("/NPC/oldman_left_1", gP.tileSize, gP.tileSize);
+        left2=setup("/NPC/oldman_left_2", gP.tileSize, gP.tileSize);
+        right1=setup("/NPC/oldman_right_1", gP.tileSize, gP.tileSize);
+        right2=setup("/NPC/oldman_right_2", gP.tileSize, gP.tileSize);
     }
     public void setAction(){
         actionLockCounter++;
@@ -41,7 +41,7 @@ public class NPC_OldMan extends Entity {
             if(i > 50 && i <= 75 ){
                 directions="left";
             }
-            if(i > 75 && i <= 100 ){
+            if(i > 75){
                 directions="right";
             }
             actionLockCounter=0;
@@ -49,10 +49,10 @@ public class NPC_OldMan extends Entity {
 
     }
     public void setDialogue(){
-        dialogue[0] = "Hello, young man.";
-        dialogue[1] = "So you too have come to this island...\n for its treasure.";
-        dialogue[2] = "I used to be a great wizard but now...\n I'm too old for this adventure.";
-        dialogue[3] = "So i can't accompany you...\n Be careful this island is dangerous and\n good luck.";
+        dialogue[0] = "Hello, adventurer...";
+        dialogue[1] = "Thank you for coming here...";
+        dialogue[2] = "this place is infested with slimes...";
+        dialogue[3] = "Please defeat them all...";
     }
     public void speak() {
         //For character specific dialogues

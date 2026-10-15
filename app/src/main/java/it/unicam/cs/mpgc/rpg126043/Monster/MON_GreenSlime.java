@@ -17,10 +17,11 @@ public class MON_GreenSlime extends Entity {
         //STATS
         name="Green Slime";
         speed=1;
-        maxLife=4;
+        maxLife=10;
         currentLife=maxLife;
-        defense = 7;
+        defense = 6;
         attack = 12;
+        exp=5;
 
 
         solidArea.x=3;
@@ -35,14 +36,14 @@ public class MON_GreenSlime extends Entity {
     }
 
     public void getImage(){
-        up1=setup("/Enemy/Walking_Sprites/greenslime_down_1", gP.tilesize, gP.tilesize);
-        up2=setup("/Enemy/Walking_Sprites/greenslime_down_2", gP.tilesize, gP.tilesize);
-        down1=setup("/Enemy/Walking_Sprites/greenslime_down_1", gP.tilesize, gP.tilesize);
-        down2=setup("/Enemy/Walking_Sprites/greenslime_down_2", gP.tilesize, gP.tilesize);
-        left1=setup("/Enemy/Walking_Sprites/greenslime_down_1", gP.tilesize, gP.tilesize);
-        left2=setup("/Enemy/Walking_Sprites/greenslime_down_2", gP.tilesize, gP.tilesize);
-        right1=setup("/Enemy/Walking_Sprites/greenslime_down_1", gP.tilesize, gP.tilesize);
-        right2=setup("/Enemy/Walking_Sprites/greenslime_down_2", gP.tilesize, gP.tilesize);
+        up1=setup("/Enemy/Images/greenslime_down_1", gP.tileSize, gP.tileSize);
+        up2=setup("/Enemy/Images/greenslime_down_2", gP.tileSize, gP.tileSize);
+        down1=setup("/Enemy/Images/greenslime_down_1", gP.tileSize, gP.tileSize);
+        down2=setup("/Enemy/Images/greenslime_down_2", gP.tileSize, gP.tileSize);
+        left1=setup("/Enemy/Images/greenslime_down_1", gP.tileSize, gP.tileSize);
+        left2=setup("/Enemy/Images/greenslime_down_2", gP.tileSize, gP.tileSize);
+        right1=setup("/Enemy/Images/greenslime_down_1", gP.tileSize, gP.tileSize);
+        right2=setup("/Enemy/Images/greenslime_down_2", gP.tileSize, gP.tileSize);
     }
     public void setAction(){
         actionLockCounter++;
@@ -61,11 +62,16 @@ public class MON_GreenSlime extends Entity {
             if(i > 50 && i <= 75 ){
                 directions="left";
             }
-            if(i > 75 && i <= 100 ){
+            if(i > 75 ){
                 directions="right";
             }
             actionLockCounter=0;
         }
 
+    }
+    @Override
+    public void damageReaction(){
+        actionLockCounter=0;
+        directions = gP.player.directions;
     }
 }
