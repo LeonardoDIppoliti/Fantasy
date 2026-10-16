@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public CombatHandler combatHandler = new CombatHandler(this);
     public EventHandler eHhandler = new EventHandler(this);
-    public AssetSetter aSetter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this,new FixedSpawnSource(tileSize));
     public UI ui = new UI(this);
     SaveLoad saveLoad = new SaveLoad(this);
     private GameScreenHandler gScreenHandler = new GameScreenHandler(this);

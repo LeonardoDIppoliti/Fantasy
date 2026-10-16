@@ -34,14 +34,15 @@ public class GameScreenHandler {
 
                     gP.keyH.setEnterPressed(false);
                     gP.ui.setGameStateIndex(UI.GameState.playscreen.ordinal());
-                    gP.ui.setCommandNum(0);
+                    gP.ui.setCommandNum(gP.ui.getMinCommandNum());
 
                 }
                 if(gP.ui.getCommandNum() == 1){
                     gP.keyH.setEnterPressed(false);
-                    gP.getSaveLoad().load();
+                    if(gP.getSaveLoad().load()){
                     gP.ui.setGameStateIndex(UI.GameState.playscreen.ordinal());
                     gP.ui.setCommandNum(0);
+                    }
                 }
 
                 if(gP.ui.getCommandNum() == gP.ui.getMaxCommandNum()){
@@ -52,17 +53,17 @@ public class GameScreenHandler {
             }
             if(gameState == UI.GameState.MenuScreen.ordinal()){
                gP.keyH.setEnterPressed(false);
-                if(gP.ui.getCommandNum() == 0){
+                if(gP.ui.getCommandNum() == gP.ui.getMinCommandNum()){
                     gP.ui.setGameStateIndex(UI.GameState.characterStatusScreen.ordinal());
-                    gP.ui.setCommandNum(0);
+                    gP.ui.setCommandNum(gP.ui.getMinCommandNum());
 
                 }
                 if(gP.ui.getCommandNum() == 1){
                     gP.ui.setGameStateIndex(UI.GameState.controlsScreen.ordinal());
-                    gP.ui.setCommandNum(0);
+                    gP.ui.setCommandNum(gP.ui.getMinCommandNum());
 
                 }
-                if(gP.ui.getCommandNum() == 2){
+                if(gP.ui.getCommandNum() == gP.ui.getMaxCommandNum()){
                     gP.resetGame();
                     closeGame();
                 }
@@ -79,13 +80,13 @@ public class GameScreenHandler {
                         gP.player.restoreStatus();
                         gP.player.setDefaultPosition();
                         gP.ui.setGameStateIndex(UI.GameState.playscreen.ordinal());
-                        gP.ui.setCommandNum(0);
+                        gP.ui.setCommandNum(gP.ui.getMinCommandNum());
                     }
                     if (gP.ui.getCommandNum() == gP.ui.getMaxCommandNum()) {
                         gP.resetGame();
 
                         gP.ui.setGameStateIndex(UI.GameState.titleScreen.ordinal());
-                        gP.ui.setCommandNum(0);
+                        gP.ui.setCommandNum(gP.ui.getMinCommandNum());
                     }
                 } else {
                     closeGame();
@@ -100,7 +101,7 @@ public class GameScreenHandler {
             if(gameState == UI.GameState.playscreen.ordinal()){
 
                gP.ui.setGameStateIndex(UI.GameState.MenuScreen.ordinal());
-                gP.ui.setCommandNum(0);
+                gP.ui.setCommandNum(gP.ui.getMinCommandNum());
                gP.keyH.setEscPressed(false);
             }
             if(gameState == UI.GameState.controlsScreen.ordinal()){
