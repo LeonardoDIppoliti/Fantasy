@@ -6,24 +6,24 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayScreen {
-    GamePanel gP;
+public class PlayScreen  extends SuperScreen {
+
     List<String> messageList = new ArrayList<>();
     List<Integer> messageCounter = new ArrayList<>();
     int frames = 60;
     public PlayScreen(GamePanel gP) {
-        this.gP = gP;
+        super(gP);
     }
+    @Override
+    public void drawScreen(Graphics2D g2) {
 
-    public void drawPlayerLife(Graphics2D g2) {
 
-
-      int  x = gP.tileSize / 2;
-       int y = gP.tileSize;
+      int  x = gP.getTileSize() / 2;
+       int y = gP.getTileSize();
         g2.drawString(gP.player.getName(), x, y);
-        x += gP.tileSize * 3;
+        x += gP.getTileSize() * 3;
 
-        double oneScale = (double) gP.tileSize / gP.player.getMaxLife();
+        double oneScale = (double) gP.getTileSize() / gP.player.getMaxLife();
         double hpBarValue = oneScale * gP.player.getCurrentLife();
 
         y -= 15;
@@ -37,8 +37,8 @@ public class PlayScreen {
 
     public void drawMessage(Graphics2D g2) {
 
-        int messageX = gP.tileSize;
-        int messageY = gP.tileSize * 4;
+        int messageX = gP.getTileSize();
+        int messageY = gP.getTileSize() * 4;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
         for (int i = 0; i < messageList.size(); i++) {
             if (messageList.get(i) != null) {

@@ -4,21 +4,21 @@ import it.unicam.cs.mpgc.rpg126043.Main.GamePanel;
 
 import java.awt.*;
 
-public class MenuScreen {
-    GamePanel gP;
+public class MenuScreen  extends SuperScreen{
+
 
     public MenuScreen(GamePanel gP) {
-        this.gP = gP;
+        super(gP);
     }
-
-    public void drawMenuState(Graphics2D g2){
+    @Override
+    public void drawScreen(Graphics2D g2){
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(32f));
 
-      int  frameX= gP.tileSize*6;
-      int  frameY= gP.tileSize;
-      int width = gP.tileSize*8;
-      int height = gP.tileSize*10;
+      int  frameX= gP.getTileSize()*6;
+      int  frameY= gP.getTileSize();
+      int width = gP.getTileSize()*8;
+      int height = gP.getTileSize()*10;
 
         //SUB WINDOW
         gP.ui.drawSubWindow(frameX,frameY,width,height);
@@ -31,25 +31,25 @@ public class MenuScreen {
         //TITLE
         String text = "OPTIONS";
         textX = gP.ui.getXforCenteredText(text);
-        textY = frameY + gP.tileSize;
+        textY = frameY + gP.getTileSize();
         g2.drawString(text,textX,textY);
 
         //STATUS
         int cursorX=textX-15;
-        textX=frameX+gP.tileSize;
-        textY += gP.tileSize*2;
+        textX=frameX+gP.getTileSize();
+        textY += gP.getTileSize()*2;
         g2.drawString("STATUS",textX,textY);
         if(gP.ui.getCommandNum()==gP.ui.getMinCommandNum()){
             g2.drawString(">",cursorX,textY);
         }
         //CONTROLS
-        textY +=gP.tileSize;
+        textY +=gP.getTileSize();
         g2.drawString("CONTROLS",textX,textY);
         if(gP.ui.getCommandNum()==1){
             g2.drawString(">",cursorX,textY);
         }
         //END GAME
-        textY +=gP.tileSize;
+        textY +=gP.getTileSize();
         g2.drawString("END GAME",textX,textY);
         if(gP.ui.getCommandNum()==2){
             g2.drawString(">",cursorX,textY);

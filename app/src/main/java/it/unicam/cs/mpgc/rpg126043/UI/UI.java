@@ -32,21 +32,21 @@ public class UI {
         //TITLE STATE
         if (gameStateIndex == gameState.titleScreen.ordinal()) {
             maxCommandNum = 2;
-            gp.getTitleScreen().drawTitleScreen(g2);
+            gp.getTitleScreen().drawScreen(g2);
             gp.getGameScreenHandler().WSPressed();
             gp.getGameScreenHandler().enterCommandControl(gameState.titleScreen.ordinal());
         }
 
         //PLAY STATE
         if (gameStateIndex == gameState.playScreen.ordinal()) {
-            gp.getPlayScreen().drawPlayerLife(g2);
+            gp.getPlayScreen().drawScreen(g2);
             gp.getPlayScreen().drawMessage(g2);
             gp.getGameScreenHandler().escapeCommandControll(gameState.playScreen.ordinal());
         }
 
         //MENU STATE
         if (gameStateIndex == gameState.MenuScreen.ordinal()) {
-            gp.getMenuScreen().drawMenuState(g2);
+            gp.getMenuScreen().drawScreen(g2);
             maxCommandNum = 2;
             gp.getGameScreenHandler().WSPressed();
             gp.getGameScreenHandler().enterCommandControl(gameState.MenuScreen.ordinal());
@@ -55,22 +55,22 @@ public class UI {
         }
         //CONTROL STATE
         if (gameStateIndex == gameState.controlsScreen.ordinal()) {
-            gp.getControlsScreen().drawControlsScreen(g2);
+            gp.getControlsScreen().drawScreen(g2);
             gp.getGameScreenHandler().escapeCommandControll(gameState.controlsScreen.ordinal());
                    }
         //DIALOGUE STATE
         if (gameStateIndex == gameState.dialogueScreen.ordinal()) {
-            gp.getDialogueScreen().drawDialogueScreen(g2);
+            gp.getDialogueScreen().drawScreen(g2);
             gp.getGameScreenHandler().enterCommandControl(gameState.dialogueScreen.ordinal());
         }
         //CHARACTER STATE
         if (gameStateIndex == gameState.characterStatusScreen.ordinal()) {
-            gp.getCharacterStatusScreen().drawCharacterStatsScreen(g2);
+            gp.getCharacterStatusScreen().drawScreen(g2);
             gp.getGameScreenHandler().escapeCommandControll(gameState.characterStatusScreen.ordinal());
         }
         //GAMEOVER STATE
         if (gameStateIndex == gameState.gameOverScreen.ordinal()) {
-            gp.getGameOverScreen().drawGameOverScreen(g2);
+            gp.getGameOverScreen().drawScreen(g2);
             gp.getGameScreenHandler().WSPressed();
             gp.getGameScreenHandler().enterCommandControl(gameState.gameOverScreen.ordinal());
         }

@@ -4,14 +4,14 @@ import it.unicam.cs.mpgc.rpg126043.Main.GamePanel;
 
 import java.awt.*;
 
-public class GameOverScreen {
-    GamePanel gP;
+public class GameOverScreen extends SuperScreen {
+
     public GameOverScreen(GamePanel gP) {
-        this.gP = gP;
+       super(gP);
 
     }
-
-    public void drawGameOverScreen(Graphics2D g2){
+    @Override
+    public void drawScreen(Graphics2D g2){
         g2.setColor(new Color(0,0,0,150));
         g2.fillRect(0,0,gP.screenWidth,gP.screenHeight);
 
@@ -19,7 +19,7 @@ public class GameOverScreen {
        String text = "GAME OVER";
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,110F));
        int x=gP.ui.getXforCenteredText(text);
-       int y=gP.tileSize*4;
+       int y=gP.getTileSize()*4;
         //SHADOW
         g2.setColor(Color.black);
         g2.drawString(text,x,y);
@@ -29,14 +29,14 @@ public class GameOverScreen {
 
 
         g2.setFont(g2.getFont().deriveFont(50F));
-        y+=gP.tileSize*3;
+        y+=gP.getTileSize()*3;
         if (!gP.gameFinished()) {
             //RETRY
             text = "RETRY";
             x = gP.ui.getXforCenteredText(text);
             g2.drawString(text, x, y);
             if (gP.ui.getCommandNum() == 0) {
-                g2.drawString(">", x-gP.tileSize, y);
+                g2.drawString(">", x-gP.getTileSize(), y);
 
             }
             y+=60;

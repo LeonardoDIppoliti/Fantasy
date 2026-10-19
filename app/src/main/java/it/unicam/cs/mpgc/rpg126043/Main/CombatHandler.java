@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg126043.Main;
 
 import it.unicam.cs.mpgc.rpg126043.Entity.Entity;
 import it.unicam.cs.mpgc.rpg126043.Entity.Player;
+import it.unicam.cs.mpgc.rpg126043.Monster.Monster;
 import it.unicam.cs.mpgc.rpg126043.UI.UI;
 
 public class CombatHandler {
@@ -13,46 +14,33 @@ public class CombatHandler {
 
     public void damageMonster(int i){
         Player player = gP.player;
-        if (i != 999) {
-            Entity monster = gP.monster[i];
-            if (!monster.invincible) {
+        Monster monster = gP.monster[i];
+        int damage=player.damageAgainst(monster);
+        if(!monster.takeDamage(damage)) {return;}
+        addMessage(damage + " damage!");
+        monster.damageReaction();
+         if(monster.isDefeated()){
+             monster.startDying();
+             addMessage("Killed the "+ monster.getName()+" !");
+             addMessage("Obtained " + monster.getRewardExp() +" !");
+             if(player.checkLevelUp(monster.getRewardExp())){
+                 gP.getDialogueScreen().setCurrentDialogue(
+                         "You feel stronger! \n" + "You are level : " +gP.player.getLevel()+" now !"
+                 );
+                 gP.ui.setGameStateIndex(UI.GameState.dialogueScreen.ordinal());
+             }
 
-             int damage = calculateDamage(monster,gP.player);
-               monster.currentLife -= damage;
-                gP.combatHandler.addMessage(damage+" damage!");
-                monster.invincible = true;
-                monster.damageReaction();
+         }
 
-                if (monster.currentLife <= 0) {
-                    monster.setDying(true);
-                    addMessage("Killed the " +monster.name + "!");
-                    addMessage("Obtained " + monster.getExp() + " EXP!");
-                    player.setExp(player.getExp() + monster.getExp() );
-
-                    player.checkLevelUp();
-                }
-            }
-        }
     }
-    public void contactMonster(Entity monster){
-
-            Player player = gP.player;
-           if(monster != null && monster.isAlive() && !monster.invincible){
-             if (!player.getInvincible() && gP.ui.getGameStateIndex()==UI.GameState.playscreen.ordinal()) {
-                int damage = calculateDamage(player,monster);
-                player.setCurrentLife(player.getCurrentLife() - damage);
-                player.setInvincible(true);
-                }
-           }
-
-
+    public void contactMonster(Monster monster){
+    if(monster == null|| !monster.isAlive() || monster.isDying() || monster.isInvincible()){    return;}
+    if(gP.ui.getGameStateIndex() != UI.GameState.playscreen.ordinal()) {return;}
+    gP.player.takeDamage(monster.damageAgainst(gP.player));
     }
     public void addMessage(String message) {
         gP.getPlayScreen().getMessageList().add(message);
         gP.getPlayScreen().getMessageCounter().add(0);
     }
 
-    private int calculateDamage(Entity defender,Entity attacker){
-        return Math.max(0,attacker.attack-defender.defense);
-    }
 }

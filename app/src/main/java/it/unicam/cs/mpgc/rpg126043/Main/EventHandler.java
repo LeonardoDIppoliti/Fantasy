@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg126043.Main;
 
+import it.unicam.cs.mpgc.rpg126043.Entity.Direction;
 import it.unicam.cs.mpgc.rpg126043.UI.UI;
 
 import java.awt.*;
@@ -38,41 +39,41 @@ public class EventHandler {
     public void checkEvent(){
 
         //CHECK IF PLAYER IS DISTANT FROM LAST EVENT
-        int xDistance = Math.abs(gP.player.worldX-previousEventX);
-        int yDistance = Math.abs(gP.player.worldY-previousEventY);
+        int xDistance = Math.abs(gP.player.getWorldX()-previousEventX);
+        int yDistance = Math.abs(gP.player.getWorldY()-previousEventY);
         int distance = Math.max(xDistance, yDistance);
-        if(distance>gP.tileSize){
+        if(distance>gP.getTileSize()){
             canTouchEvent=true;
         }
 
         if(canTouchEvent){
-            if(hit(23,7,"up")){
+            if(hit(23,7,Direction.UP)){
                 healingPool(23,7);
             }
         }
 
     }
     //Event replays after player move away from it
-    public boolean hit(int col,int row,String reqDirection){
+    public boolean hit(int col, int row, Direction reqDirection){
         boolean hit=false;
 
-        gP.player.solidArea.x = gP.player.worldX + gP.player.solidArea.x;
-        gP.player.solidArea.y = gP.player.worldY + gP.player.solidArea.y;
-        eventRect[col][row].x = col * gP.tileSize + eventRect[col][row].x;
-        eventRect[col][row].y = row * gP.tileSize + eventRect[col][row].y;
+        gP.player.getSolidArea().x = gP.player.getWorldX() + gP.player.getSolidArea().x;
+        gP.player.getSolidArea().y = gP.player.getWorldY() + gP.player.getSolidArea().y;
+        eventRect[col][row].x = col * gP.getTileSize() + eventRect[col][row].x;
+        eventRect[col][row].y = row * gP.getTileSize() + eventRect[col][row].y;
 
-        if(gP.player.solidArea.intersects(eventRect[col][row]) &&
+        if(gP.player.getSolidArea().intersects(eventRect[col][row]) &&
                 !eventRect[col][row].eventDone){
-            if(gP.player.directions.contentEquals(reqDirection) ||reqDirection.equals("any")){
+            if(gP.player.getDirection() == reqDirection){
                 hit=true;
 
-                previousEventX= gP.player.worldX;
-                previousEventY= gP.player.worldY;
+                previousEventX= gP.player.getWorldX();
+                previousEventY= gP.player.getWorldY();
             }
         }
         //RESET
-        gP.player.solidArea.x= gP.player.solidAreaDefaultX;
-        gP.player.solidArea.y= gP.player.solidAreaDefaultY;
+        gP.player.getSolidArea().x= gP.player.getSolidAreaDefaultX();
+        gP.player.getSolidArea().y= gP.player.getSolidAreaDefaultY();
         eventRect[col][row].x=eventRect[col][row].eventRectDefaultX;
         eventRect[col][row].y=eventRect[col][row].eventRectDefaultY;
 
@@ -80,7 +81,7 @@ public class EventHandler {
     }
     public void healingPool(int col,int row){
         if(gP.keyH.isEnterPressed()){
-            gP.player.isAttackCancelled(true);
+            gP.player.cancelAttack();
             gP.getDialogueScreen().setCurrentDialogue("You drink the water \n Your wounds recovered"+"\n (progress has been saved)");
             gP.ui.setGameStateIndex(UI.GameState.dialogueScreen.ordinal());
             gP.player.setCurrentLife(gP.player.getMaxLife());

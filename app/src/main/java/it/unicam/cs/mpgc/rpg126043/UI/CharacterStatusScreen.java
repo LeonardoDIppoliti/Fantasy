@@ -4,20 +4,20 @@ import it.unicam.cs.mpgc.rpg126043.Main.GamePanel;
 
 import java.awt.*;
 
-public class CharacterStatusScreen {
-    GamePanel gP;
+public class CharacterStatusScreen extends SuperScreen{
 
     public CharacterStatusScreen(GamePanel gP) {
-        this.gP = gP;
-    }
+        super(gP);
 
-    public void drawCharacterStatsScreen(Graphics2D g2) {
+    }
+    @Override
+    public void drawScreen(Graphics2D g2) {
         //CREATE FRAME
 
-      int  frameX = gP.tileSize*2;
-       int frameY = gP.tileSize;
-      int  frameWidth = gP.tileSize*7;
-       int frameHeight = gP.tileSize*10;
+      int  frameX = gP.getTileSize()*2;
+       int frameY = gP.getTileSize();
+      int  frameWidth = gP.getTileSize()*7;
+       int frameHeight = gP.getTileSize()*10;
         gP.ui.drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         //WRITE TEXT
@@ -29,13 +29,13 @@ public class CharacterStatusScreen {
         //NAMES
 
         int  textX=frameX + 20;
-        int   textY=frameY + gP.tileSize;
+        int   textY=frameY + gP.getTileSize();
         int lineHeight=35;
         getStatsNames(g2,textX,textY,lineHeight);
 
         //VALUES
         int tailX= (frameX+frameWidth)-30;
-        textY=frameY + gP.tileSize;
+        textY=frameY + gP.getTileSize();
         String value;
 
         value = gP.player.getName();
@@ -54,7 +54,7 @@ public class CharacterStatusScreen {
         g2.drawString(value,textX,textY);
         textY+=lineHeight;
 
-        value = String.valueOf(gP.player.getStrength());
+        value = String.valueOf(gP.player.getAttack());
         textX=gP.ui.getXforAlignToRightText(value,tailX);
         g2.drawString(value,textX,textY);
         textY+=lineHeight;

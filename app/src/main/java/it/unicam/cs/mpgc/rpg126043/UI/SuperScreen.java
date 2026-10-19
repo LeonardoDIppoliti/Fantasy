@@ -14,7 +14,7 @@ public abstract class SuperScreen {
         this.gP = gP;
     }
 
-    public void draw(Graphics2D g2){
+    public void drawScreen(Graphics2D g2){
 
     }
 }

@@ -19,15 +19,17 @@ public class SaveLoad {
         File filePath= new File("save.dat");
         Player p = gP.player;
         DataStorage ds = new DataStorage();
-        ds.attack=p.attack;
-        ds.defense=p.defense;
-        ds.maxLife=p.maxLife;
-        ds.currentLife=p.currentLife;
+        //PLAYER ATTRIBUTES
+        ds.attack=p.getAttack();
+        ds.defense=p.getDefense();
+        ds.maxLife=p.getMaxLife();
+        ds.currentLife=p.getCurrentLife();
         ds.exp=p.getExp();
         ds.level=p.getLevel();
         ds.nextLevelExp=p.getNextLevelExp();
-        ds.worldX=p.worldX;
-        ds.worldY=p.worldY;
+        ds.worldX=p.getWorldX();
+        ds.worldY=p.getWorldY();
+
         ds.monsters=gP.aSetter.aliveMonsters();
         try{
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
@@ -48,16 +50,11 @@ public class SaveLoad {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
             DataStorage ds= (DataStorage) ois.readObject();
             Player p=gP.player;
-            p.setExp(ds.exp);
-            p.setCurrentLife(ds.currentLife);
-            p.setNextLevelExp(ds.nextLevelExp);
-            p.setLevel( ds.level);
-            p.setDefense(ds.defense);
-            p.setMaxLife(ds.maxLife);
-            p.setStrength(ds.attack);
-            p.setInvincible(false);
-            p.worldX=ds.worldX;
-            p.worldY=ds.worldY;
+            p.restoreProgress(ds.level, ds.exp,ds.nextLevelExp);
+            p.restoreStats(ds.maxLife, ds.currentLife, ds.attack, ds.defense);
+            p.setWorldX(ds.worldX);
+            p.setWorldY(ds.worldY);
+
 
             gP.aSetter.spawnMonsters(ds.monsters);
             return true;

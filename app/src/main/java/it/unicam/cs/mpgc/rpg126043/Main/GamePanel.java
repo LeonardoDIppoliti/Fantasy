@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg126043.Main;
 
 import it.unicam.cs.mpgc.rpg126043.Data.SaveLoad;
 import it.unicam.cs.mpgc.rpg126043.Entity.*;
+import it.unicam.cs.mpgc.rpg126043.Monster.Monster;
 import it.unicam.cs.mpgc.rpg126043.Tile.TileManager;
 import it.unicam.cs.mpgc.rpg126043.UI.*;
 
@@ -15,7 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS
     private final int originalTileSize=16; // 16x16 tile
     private final int scale = 3;
-    public final int tileSize=originalTileSize*scale; //48x48 tile size
+    private final int tileSize=originalTileSize*scale; //48x48 tile size
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize*maxScreenCol; //786 pixels
@@ -43,9 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //Entity , Player And Object
-    public Entity[] npc = new Entity[10];
+    public NPC[] npc = new NPC[10];
     public Player player = new Player(this, keyH);
-    public Entity[] monster= new Entity[20];
+    public Monster[] monster= new Monster[20];
     List<Entity> entityList = new ArrayList<>();
 
     //Game state
@@ -56,7 +57,6 @@ public class GamePanel extends JPanel implements Runnable {
     private final ControlsScreen controlsScreen = new ControlsScreen(this);
     private final CharacterStatusScreen characterStatusScreen = new CharacterStatusScreen(this);
     private final GameOverScreen  gameOverScreen = new GameOverScreen(this);
-
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -119,20 +119,11 @@ public class GamePanel extends JPanel implements Runnable {
 
             //MONSTER
             for (int i=0; i<monster.length; i++) {
-
-                if (monster[i] != null ) {
-                    if (monster[i].isAlive()&& !monster[i].isDead()) {
-                        monster[i].update();
-                    }
-                    if (!monster[i].isAlive()) {
-                        monster[i] = null;
-                    }
+                    Monster mon =  monster[i];
+                    if (mon == null) {continue;}
+                    if (mon.isAlive()) {mon.update();}
+                    else {monster[i] =null;}
                 }
-
-
-
-
-            }
             if (allMonstersDead()) {
                 gamefinished=true;
                 ui.showGameOver(true);
@@ -165,14 +156,14 @@ public class GamePanel extends JPanel implements Runnable {
 
             //ADD ENTITY TO ARRAYLIST
             entityList.add(player);
-            for (Entity entity : npc) {
-                if (entity != null) {
-                    entityList.add(entity);
+            for (NPC n : npc) {
+                if (n != null) {
+                    entityList.add(n);
                 }
             }
-            for (Entity entity : monster) {
-                if (entity != null) {
-                    entityList.add(entity);
+            for (Monster mon : monster) {
+                if (mon != null) {
+                    entityList.add(mon);
                 }
             }
             //SORT
@@ -180,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable {
                 @Override
                 public int compare(Entity e1, Entity e2) {
 
-                    return Integer.compare(e1.worldY, e2.worldY);
+                    return Integer.compare(e1.getWorldY(), e2.getWorldY());
                 }
             });
 
@@ -195,7 +186,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //UI
             ui.draw(g2);
-            g2.dispose();
+
         }
     }
     public boolean allMonstersDead(){
@@ -233,4 +224,16 @@ public class GamePanel extends JPanel implements Runnable {
     public SaveLoad getSaveLoad() { return saveLoad; }
     public GameScreenHandler getGameScreenHandler() {return gScreenHandler;}
     public boolean gameFinished(){return gamefinished;}
+    public int getTileSize(){return tileSize;}
+
+
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
 }
