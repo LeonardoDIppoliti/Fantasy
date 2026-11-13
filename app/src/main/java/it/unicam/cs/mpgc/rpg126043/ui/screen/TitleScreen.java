@@ -6,7 +6,6 @@ import it.unicam.cs.mpgc.rpg126043.interfaces.UIContext;
 import it.unicam.cs.mpgc.rpg126043.ui.ScreenNavigator;
 import it.unicam.cs.mpgc.rpg126043.ui.UIHelper;
 import it.unicam.cs.mpgc.rpg126043.ui.UITheme;
-import it.unicam.cs.mpgc.rpg126043.ui.component.ChoiceScreen;
 import it.unicam.cs.mpgc.rpg126043.ui.component.MenuEntry;
 
 import java.awt.*;

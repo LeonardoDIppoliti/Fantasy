@@ -3,7 +3,6 @@ package it.unicam.cs.mpgc.rpg126043.ui.screen;
 import it.unicam.cs.mpgc.rpg126043.interfaces.GameSession;
 import it.unicam.cs.mpgc.rpg126043.interfaces.UIContext;
 import it.unicam.cs.mpgc.rpg126043.ui.*;
-import it.unicam.cs.mpgc.rpg126043.ui.component.ChoiceScreen;
 import it.unicam.cs.mpgc.rpg126043.ui.component.MenuEntry;
 
 import java.awt.*;

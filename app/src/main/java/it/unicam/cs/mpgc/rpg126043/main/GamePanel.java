@@ -10,7 +10,7 @@ import it.unicam.cs.mpgc.rpg126043.interfaces.UIContext;
 import it.unicam.cs.mpgc.rpg126043.entity.monster.MonsterRegistry;
 import it.unicam.cs.mpgc.rpg126043.tile.TileManager;
 import it.unicam.cs.mpgc.rpg126043.ui.*;
-import it.unicam.cs.mpgc.rpg126043.ui.component.CharacterStatusScreen;
+import it.unicam.cs.mpgc.rpg126043.ui.screen.CharacterStatusScreen;
 import it.unicam.cs.mpgc.rpg126043.ui.component.MessageLog;
 import it.unicam.cs.mpgc.rpg126043.ui.screen.TitleScreen;
 import it.unicam.cs.mpgc.rpg126043.ui.screen.*;
