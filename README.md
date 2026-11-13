@@ -4,12 +4,8 @@ semplice gioco ispirato dal primo zelda il cui scopo è sconfiggere tutti gli sl
 JDK 25 o superiore
 Gradle 9
 
-build progetto:
-./gradlew build
-
-Esecuzione:
-./gradlew run
-
+build progetto ed esecuzione:
+./gradlew build run
 
 Uso di strumenti di intelligenza artificiale:
 
