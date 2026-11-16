@@ -5,6 +5,12 @@ Fantasy è semplice gioco ispirato al primo zelda il cui scopo è sconfiggere tu
 JDK 25 o superiore e 
 Gradle 9
 
+## Istruzioni
+```bash
+git clone https://github.com/LeonardoDIppoliti/Fantasy
+cd Fantasy
+```
+  
 ## Build ed Esecuzione
 build progetto ed esecuzione:
 ./gradlew build run
